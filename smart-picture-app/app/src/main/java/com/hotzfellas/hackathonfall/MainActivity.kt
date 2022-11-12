@@ -44,9 +44,21 @@ class MainActivity : AppCompatActivity() {
             val speed = weatherGetter["speed"].toString()
             val weather = weatherGetter["weather"].toString()
 
+            // Get the time of day
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            // Morning, afternoon, evening, night
+            val timeOfDay = when (hour) {
+                in 0..5 -> "night"
+                in 6..11 -> "morning"
+                in 12..17 -> "afternoon"
+                in 18..23 -> "evening"
+                else -> "morning"
+            }
+
             // Read the prompt
             val prompt =
-                "${input.text}, $weather with a temperature of $temp degrees and a wind speed of $speed miles per hour"
+                "${input.text}, $weather with a temperature of $temp degrees and a wind speed of $speed miles per hour in the $timeOfDay with a humidity of $humidity percent."
 
             // Generate the images
             val dp = dallePrompt.callAttr("DallePrompt", prompt)
