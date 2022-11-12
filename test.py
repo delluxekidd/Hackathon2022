@@ -1,37 +1,37 @@
-# This example requires the 'message_content' intent.
+from DallePrompt import DallePrompt, Weather
 
-import discord
-
-intents = discord.Intents.default()
-intents.message_content = True
-
-client = discord.Client(intents=intents)
+weather = Weather()
+print(str(weather))
 
 
-# bot is ready
-@client.event
-async def on_ready():
-    try:
-        print(client.user.name)
-        print(client.user.id)
-        print('Discord.py Version: {}'.format(discord.__version__))
+prompt = ""
+choice = ""
 
-        blah = discord.Permissions.use_application_commands
-        print(blah)
+# Ask user for choice of auto or manual
+# Auto will generate a random prompt based on the weather and other factors
+# Manual will ask the user for a prompt
+while choice != "auto" and choice != "manual":
+    choice = input(
+        "Would you like to generate a random prompt or enter your own? (auto/manual): ")
 
-        # Send a slash in the channel with ID 1040829566622638092
-        channel = client.get_channel(1040829566622638092)
-        await channel.send('/imagine being a bot')
+if choice == "auto":
+    # Generate a random prompt from weather data
+    print("Generating random prompt...")
+    prompt = "A picture of a " + str(weather.weather) + " with a temperature of " + str(
+        weather.temp) + " degrees and a wind speed of " + str(weather.wind) + " miles per hour" + ", artistic, 4k"
+    print("Prompt: " + prompt)
+    # wait for user to press enter
+    input("Press enter to generate image...")
 
-    except Exception as e:
-        print(e)
+if choice == "manual":
+    # Ask user for prompt
+    prompt = input("Enter your prompt: ")
+
+# Ask user for prompt text
+while prompt == "":
+    prompt = input("Enter prompt text: ")
 
 
-@client.event
-async def on_message(message):
-    # print message content in terminal
-    print(message.content)
+dalle_prompt = DallePrompt(prompt)
 
-
-client.run(
-    'MTA0MDgzMDUwODI5NDIwOTYwNg.G9YKRW.qeMo1bzEZSQZ9Pu6mmf9FQxASy36kIYBWmwoQc')
+print(str(dalle_prompt.image_paths))

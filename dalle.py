@@ -8,7 +8,7 @@ import requests
 dalle = Dalle2("sess-hSFU7aZjRvetjOoxT4O9zcx2s4r1WWWouiGCTRbx")
 
 weather = requests.get(
-    'http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=bd0d4417e907059d5e1f3731e52fca94')
+    'http://api.openweathermap.org/data/2.5/forecast?lat=36.082157&lon=-94.171852&id=524901&id=524901&appid=bd0d4417e907059d5e1f3731e52fca94')
 
 # Weather Class
 # Stores: Temperature, Humidity, Wind Speed, Weather Description
@@ -130,3 +130,6 @@ def display_image(image_path):
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+
+
+display_image("image0.png")
