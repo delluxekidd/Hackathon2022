@@ -56,9 +56,30 @@ class MainActivity : AppCompatActivity() {
                 else -> "morning"
             }
 
+            // Change temperature to warm, cold, or neutral
+            val tempV = when {
+                temp.toFloat() > 303 -> "warm"
+                temp.toFloat() < 288 -> "cold"
+                else -> "neutral"
+            }
+
+            // Generate a random number between 0 and 4
+            val rand = Random()
+            val randNum = rand.nextInt(5)
+
+            // Set randomMod to certain strings based on the random number
+            val randomMod = when (randNum) {
+                0 -> "hyperrealistic"
+                1 -> "water color"
+                2 -> "abstract"
+                3 -> "cartoon"
+                4 -> "wallpaper"
+                else -> ""
+            }
+
             // Read the prompt
             val prompt =
-                "${input.text}, $weather with a temperature of $temp degrees and a wind speed of $speed miles per hour in the $timeOfDay with a humidity of $humidity percent."
+                "${input.text}, $weather day, $tempV, $timeOfDay, $randomMod"
 
             // Generate the images
             val dp = dallePrompt.callAttr("DallePrompt", prompt)
