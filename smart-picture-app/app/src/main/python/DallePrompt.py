@@ -30,7 +30,7 @@ class Weather:
 class DallePrompt():
     def __init__(self, prompt):
         # this is the bearer key taken from dalle2
-        self._dalle = Dalle2("sess-hSFU7aZjRvetjOoxT4O9zcx2s4r1WWWouiGCTRbx")
+        self._dalle = Dalle2("sess-VhikHUw8UafbT4IZg5jSKc7dxPzsFbSPdcTMEQqE")
 
         # this is the prompt to pass to the dalle2 model
         generations = self._dalle.generate(prompt)

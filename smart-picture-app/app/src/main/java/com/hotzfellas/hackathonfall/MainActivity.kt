@@ -3,12 +3,14 @@ package com.hotzfellas.hackathonfall
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import java.util.*
@@ -108,6 +110,31 @@ class MainActivity : AppCompatActivity() {
 
                             // Make the input invisible
                             input.visibility = EditText.INVISIBLE
+
+                            // Set the value of the clock
+                            val textClock = TextClock(this)
+                            textClock.format12Hour = "h:mm a"
+                            textClock.format24Hour = "H:mm"
+                            textClock.textSize = 100F
+                            textClock.setTypeface(null, Typeface.BOLD)
+                            textClock.setTextColor(-0x777778)
+
+                            // Add the clock to the layout
+                            val clock_layout = findViewById<LinearLayout>(R.id.Clock_View)
+                            clock_layout.addView(textClock)
+
+                            // Create small text views
+                            val tempView = TextView(this)
+                            // Convert from Kelvin to Fahrenheit
+                            tempView.text = "Temperature: ${((temp.toFloat() - 273.15) * 9 / 5 + 32).toInt()}°F"
+                            tempView.textSize = 40F
+                            textClock.setTypeface(null, Typeface.BOLD)
+                            tempView.setTextColor(-0x777778)
+
+                            // Add the temperature to the layout
+                            val info_layout = findViewById<LinearLayout>(R.id.Info_View)
+                            info_layout.addView(tempView)
+
                         })
 
                     }
@@ -137,6 +164,18 @@ class MainActivity : AppCompatActivity() {
                 // Cycle through the images
                 imageIndex = (imageIndex + 1) % 4
                 image.setImageBitmap(bitmaps[imageIndex])
+            }
+
+            // Add select Android TV button listener for the view
+            image.setOnGenericMotionListener { _, event ->
+                if (event.action == MotionEvent.ACTION_BUTTON_PRESS) {
+                    if (event.buttonState == KeyEvent.KEYCODE_BUTTON_SELECT) {
+                        // Cycle through the images
+                        imageIndex = (imageIndex + 1) % 4
+                        image.setImageBitmap(bitmaps[imageIndex])
+                    }
+                }
+                true
             }
         }
     }
