@@ -24,7 +24,7 @@ class Weather:
 
     def __str__(self):
         return "Temperature: " + str(self.temp) + " Humidity: " + str(self.humidity) + " Wind Speed: " + str(self.wind) + \
-            " Weather Description: " + str(self.weather)
+               " Weather Description: " + str(self.weather)
 
 
 class DallePrompt():

@@ -1,0 +1,16 @@
+*.iml
+.gradle
+/local.properties
+/.iadea.old/caches
+/.iadea.old/deploymentTargetDropdown.xml
+/.iadea.old/libraries
+/.iadea.old/modules.xml
+/.iadea.old/workspace.xml
+/.iadea.old/navEditor.xml
+/.iadea.old/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
