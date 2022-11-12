@@ -46,7 +46,7 @@ choice = ""
 # Ask user for choice of auto or manual
 # Auto will generate a random prompt based on the weather and other factors
 # Manual will ask the user for a prompt
-while choice != "auto" and choice != "manual":
+while choice != "auto" and choice != "manual" and choice != "none":
     choice = input(
         "Would you like to generate a random prompt or enter your own? (auto/manual): ")
 
@@ -63,24 +63,27 @@ if choice == "manual":
     # Ask user for prompt
     prompt = input("Enter your prompt: ")
 
-# Ask user for prompt text
-while prompt == "":
-    prompt = input("Enter prompt text: ")
+if choice != "none":
+    # Ask user for prompt text
+    while prompt == "":
+        prompt = input("Enter prompt text: ")
 
-# this is the prompt to pass to the dalle2 model
-generations = dalle.generate(prompt)
+    # this is the prompt to pass to the dalle2 model
+    generations = dalle.generate(prompt)
 
-# Loop through each element in the generations list and get the image path from the generation and add it to a list
-image_paths = []
-for generation in generations:
-    image_paths.append(generation["generation"]["image_path"])
+    # Loop through each element in the generations list and get the image path from the generation and add it to a list
+    image_paths = []
+    for generation in generations:
+        image_paths.append(generation["generation"]["image_path"])
 
-# Loop through each file path in the image_paths list and print the out to files
-i = 0
-for image_path in image_paths:
-    # Save image to file
-    urllib.request.urlretrieve(image_path, "image" + str(i) + ".png")
-    i += 1
+    # Loop through each file path in the image_paths list and print the out to files
+    i = 0
+    for image_path in image_paths:
+        # Save image to file using requests
+        r = requests.get(image_path, allow_redirects=True)
+        data = r.content
+        open("image" + str(i) + ".png", 'wb').write(data)
+        i += 1
 
 # Pygame func to display the image
 
