@@ -106,10 +106,17 @@ class MainActivity : AppCompatActivity() {
                             image.visibility = ImageView.VISIBLE
 
                             // Make the button invisible
-                            button.visibility = Button.INVISIBLE
+                            button.visibility = Button.GONE
 
                             // Make the input invisible
-                            input.visibility = EditText.INVISIBLE
+                            input.visibility = EditText.GONE
+
+                            // Make the other button visible
+                            val button2 = findViewById<Button>(R.id.Move_Button)
+                            button2.visibility = Button.VISIBLE
+                            // Make it transparent
+                            button2.alpha = 0.0f
+                            button2.isSelected = true
 
                             // Set the value of the clock
                             val textClock = TextClock(this)
@@ -160,22 +167,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             // Add on click listener to the image
-            image.setOnClickListener {
+            val button2 = findViewById<Button>(R.id.Move_Button)
+            button2.setOnClickListener {
                 // Cycle through the images
                 imageIndex = (imageIndex + 1) % 4
                 image.setImageBitmap(bitmaps[imageIndex])
-            }
-
-            // Add select Android TV button listener for the view
-            image.setOnGenericMotionListener { _, event ->
-                if (event.action == MotionEvent.ACTION_BUTTON_PRESS) {
-                    if (event.buttonState == KeyEvent.KEYCODE_BUTTON_SELECT) {
-                        // Cycle through the images
-                        imageIndex = (imageIndex + 1) % 4
-                        image.setImageBitmap(bitmaps[imageIndex])
-                    }
-                }
-                true
             }
         }
     }
