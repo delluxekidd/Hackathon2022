@@ -2,18 +2,36 @@
 
 import discord
 
-
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print(f'Logged on as {self.user}!')
-
-    async def on_message(self, message):
-        print(f'Message from {message.author}: {message.content}')
-
-
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = MyClient(intents=intents)
+client = discord.Client(intents=intents)
+
+
+# bot is ready
+@client.event
+async def on_ready():
+    try:
+        print(client.user.name)
+        print(client.user.id)
+        print('Discord.py Version: {}'.format(discord.__version__))
+
+        blah = discord.Permissions.use_application_commands
+        print(blah)
+
+        # Send a slash in the channel with ID 1040829566622638092
+        channel = client.get_channel(1040829566622638092)
+        await channel.send('/imagine being a bot')
+
+    except Exception as e:
+        print(e)
+
+
+@client.event
+async def on_message(message):
+    # print message content in terminal
+    print(message.content)
+
+
 client.run(
-    'MTA0MDgzMDUwODI5NDIwOTYwNg.GPb_80.hAbFodbd6fss1qiK4hOTV4tDztkHxYlOrS6CAc')
+    'MTA0MDgzMDUwODI5NDIwOTYwNg.G9YKRW.qeMo1bzEZSQZ9Pu6mmf9FQxASy36kIYBWmwoQc')
